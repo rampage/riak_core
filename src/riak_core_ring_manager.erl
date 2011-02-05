@@ -25,7 +25,7 @@
 -module(riak_core_ring_manager).
 -include_lib("eunit/include/eunit.hrl").
 -define(RING_KEY, riak_ring).
--behaviour(gen_server2).
+-behaviour(gen_server3).
 
 -export([start_link/0,
          start_link/1,
@@ -52,12 +52,12 @@
 %% ===================================================================
 
 start_link() ->
-    gen_server2:start_link({local, ?MODULE}, ?MODULE, [live], []).
+    gen_server3:start_link({local, ?MODULE}, ?MODULE, [live], []).
 
 
 %% Testing entry point
 start_link(test) ->
-    gen_server2:start_link({local, ?MODULE}, ?MODULE, [test], []).
+    gen_server3:start_link({local, ?MODULE}, ?MODULE, [test], []).
 
 
 %% @spec get_my_ring() -> {ok, riak_core_ring:riak_core_ring()} | {error, Reason}
@@ -70,15 +70,15 @@ get_my_ring() ->
 
 %% @spec set_my_ring(riak_core_ring:riak_core_ring()) -> ok
 set_my_ring(Ring) ->
-    gen_server2:call(?MODULE, {set_my_ring, Ring}, infinity).
+    gen_server3:call(?MODULE, {set_my_ring, Ring}, infinity).
 
 
 %% @spec write_ringfile() -> ok
 write_ringfile() ->
-    gen_server2:cast(?MODULE, write_ringfile).
+    gen_server3:cast(?MODULE, write_ringfile).
 
 ring_trans(Fun, Args) ->
-    gen_server2:call(?MODULE, {ring_trans, Fun, Args}, infinity).
+    gen_server3:call(?MODULE, {ring_trans, Fun, Args}, infinity).
 
 
 do_write_ringfile(Ring) ->
@@ -160,7 +160,7 @@ prune_ringfiles() ->
 
 %% @private (only used for test instances)
 stop() ->
-    gen_server2:cast(?MODULE, stop).
+    gen_server3:cast(?MODULE, stop).
 
 
 %% ===================================================================

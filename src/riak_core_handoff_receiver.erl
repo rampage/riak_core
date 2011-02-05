@@ -24,7 +24,7 @@
 
 -module(riak_core_handoff_receiver).
 -include_lib("riak_core_handoff.hrl").
--behaviour(gen_server2).
+-behaviour(gen_server3).
 -export([start_link/0,
          set_socket/2]).
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2,
@@ -38,10 +38,10 @@
 
 
 start_link() ->
-    gen_server2:start_link(?MODULE, [], []).
+    gen_server3:start_link(?MODULE, [], []).
 
 set_socket(Pid, Socket) ->
-    gen_server2:call(Pid, {set_socket, Socket}).
+    gen_server3:call(Pid, {set_socket, Socket}).
 
 init([]) -> 
     {ok, #state{}}.
